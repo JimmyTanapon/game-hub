@@ -10,7 +10,8 @@ const ColorModeSwitch = () => {
 
         <HStack >
             {colorMode == 'dark' ?
-                <SunIcon onClick={toggleColorMode} cursor={'pointer'}/> : <MoonIcon onClick={toggleColorMode}  cursor={'pointer'}/>
+                <SunIcon onClick={toggleColorMode} cursor={'pointer'} /> :
+                <MoonIcon onClick={toggleColorMode} cursor={'pointer'} />
             }
 
         </HStack>
