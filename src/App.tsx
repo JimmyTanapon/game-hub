@@ -1,33 +1,56 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
+import { Button, ButtonGroup, Flex, Grid, GridItem, HStack, Show } from '@chakra-ui/react'
 import './App.css'
+import Nav from './components/Nav'
+import GameGrids from './components/GameGrids'
+import GenreList from './components/GenreList'
+import { useState } from 'react'
+import { Genre } from './hook/useGeneres'
+import PlatformSelector from './components/PlatformSelector'
+import { Platform } from './hook/usePlatforms'
+import SortSelector from './components/SortSelector'
 
-function App() {
-  const [count, setCount] = useState(0)
 
+export interface GameQuery {
+  genre: Genre | null;
+  platform: Platform | null;
+  sortOrder:string;
+}
+
+function App() { 
+
+  const [gameQurey, setGameQurey] = useState<GameQuery>({ } as GameQuery)
   return (
-    <div className="App">
-      <div>
-        <a href="https://vitejs.dev" target="_blank">
-          <img src="/vite.svg" className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://reactjs.org" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.tsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </div>
+    <Grid templateAreas={{
+      base: `"nav " " main"`,
+      lg: `"nav nav" "aside main "`, //1024px
+    }}
+      templateColumns={{
+        base: '1fr',
+        lg: "200px 1fr"
+      }}
+    >
+      <GridItem area={"nav"}>
+        <Nav />
+
+      </GridItem>
+      <Show above='lg'>
+        <GridItem area={"aside"} paddingX={'5px'} >
+          <GenreList
+            selectedGenre={gameQurey.genre}
+
+            onSelectedGenre={(genre) => setGameQurey({...gameQurey,genre})} />
+
+        </GridItem>
+      </Show>
+      <GridItem area={"main"}>
+       <Flex gap={5} paddingLeft={2} marginBottom={5}>
+          <PlatformSelector selectedPlatforms={gameQurey.platform} onSelectedPlatforms={(platform) => setGameQurey({...gameQurey,platform})} />
+          <SortSelector  sortOrder={gameQurey.sortOrder} onSelectOrder={(sortOrder)=>setGameQurey({...gameQurey,sortOrder})}/>
+       </Flex>
+        <GameGrids  gameQuery={gameQurey}/>
+
+      </GridItem>
+    </Grid>
   )
 }
 
