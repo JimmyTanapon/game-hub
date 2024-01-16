@@ -14,7 +14,7 @@ import GameHeading from './components/GameHeading'
 export interface GameQuery {
   genre: Genre | null;
   platform: Platform | null;
-  sortOrder: string;
+  sortOrder:string;
 }
 
 function App() {
@@ -31,7 +31,7 @@ function App() {
       }}
     >
       <GridItem area={"nav"}>
-        <Nav />
+        <Nav  onSearch={(searchText)=>setGameQurey({...gameQurey,searchText})}/>
 
       </GridItem>
       <Show above='lg'>
@@ -44,13 +44,11 @@ function App() {
         </GridItem>
       </Show>
       <GridItem area={"main"}>
-        <GameHeading gameQuery={gameQurey} />
-        <Flex gap={5} paddingLeft={2} marginBottom={5}>
-
-          <PlatformSelector selectedPlatforms={gameQurey.platform} onSelectedPlatforms={(platform) => setGameQurey({ ...gameQurey, platform })} />
-          <SortSelector sortOrder={gameQurey.sortOrder} onSelectOrder={(sortOrder) => setGameQurey({ ...gameQurey, sortOrder })} />
-        </Flex>
-        <GameGrids gameQuery={gameQurey} />
+       <Flex gap={5} paddingLeft={2} marginBottom={5}>
+          <PlatformSelector selectedPlatforms={gameQurey.platform} onSelectedPlatforms={(platform) => setGameQurey({...gameQurey,platform})} />
+          <SortSelector  sortOrder={gameQurey.sortOrder} onSelectOrder={(sortOrder)=>setGameQurey({...gameQurey,sortOrder})}/>
+       </Flex>
+        <GameGrids  gameQuery={gameQurey}/>
 
       </GridItem>
     </Grid>
