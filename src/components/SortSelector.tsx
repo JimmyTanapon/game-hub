@@ -1,6 +1,6 @@
 import { Menu, MenuButton, Button, MenuList, MenuItem } from '@chakra-ui/react'
 import React from 'react'
-import { BsChevronDown } from 'react-icons/Bs'
+import { BsChevronDown } from 'react-icons/bs'
 
 
 interface Props{

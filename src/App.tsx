@@ -8,17 +8,18 @@ import { Genre } from './hook/useGeneres'
 import PlatformSelector from './components/PlatformSelector'
 import { Platform } from './hook/usePlatforms'
 import SortSelector from './components/SortSelector'
+import GameHeading from './components/GameHeading'
 
 
 export interface GameQuery {
   genre: Genre | null;
   platform: Platform | null;
-  sortOrder:string;
+  sortOrder: string;
 }
 
-function App() { 
+function App() {
 
-  const [gameQurey, setGameQurey] = useState<GameQuery>({ } as GameQuery)
+  const [gameQurey, setGameQurey] = useState<GameQuery>({} as GameQuery)
   return (
     <Grid templateAreas={{
       base: `"nav " " main"`,
@@ -38,16 +39,18 @@ function App() {
           <GenreList
             selectedGenre={gameQurey.genre}
 
-            onSelectedGenre={(genre) => setGameQurey({...gameQurey,genre})} />
+            onSelectedGenre={(genre) => setGameQurey({ ...gameQurey, genre })} />
 
         </GridItem>
       </Show>
       <GridItem area={"main"}>
-       <Flex gap={5} paddingLeft={2} marginBottom={5}>
-          <PlatformSelector selectedPlatforms={gameQurey.platform} onSelectedPlatforms={(platform) => setGameQurey({...gameQurey,platform})} />
-          <SortSelector  sortOrder={gameQurey.sortOrder} onSelectOrder={(sortOrder)=>setGameQurey({...gameQurey,sortOrder})}/>
-       </Flex>
-        <GameGrids  gameQuery={gameQurey}/>
+        <GameHeading gameQuery={gameQurey} />
+        <Flex gap={5} paddingLeft={2} marginBottom={5}>
+
+          <PlatformSelector selectedPlatforms={gameQurey.platform} onSelectedPlatforms={(platform) => setGameQurey({ ...gameQurey, platform })} />
+          <SortSelector sortOrder={gameQurey.sortOrder} onSelectOrder={(sortOrder) => setGameQurey({ ...gameQurey, sortOrder })} />
+        </Flex>
+        <GameGrids gameQuery={gameQurey} />
 
       </GridItem>
     </Grid>
